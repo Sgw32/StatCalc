@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\StatCalc\StatCalc\StatCalc\gsl\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\StatCalc\StatCalc\StatCalc\gsl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>.\gsl\include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\gsl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -82,10 +82,18 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileLoader.h" />
+    <ClInclude Include="Layers.h" />
+    <ClInclude Include="RAWData.h" />
+    <ClInclude Include="RegressionCalc.h" />
+    <ClInclude Include="ReportWriter.h" />
+    <ClInclude Include="Statistics.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FileLoader.cpp" />
+    <ClCompile Include="RAWData.cpp" />
     <ClCompile Include="StatCalc.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

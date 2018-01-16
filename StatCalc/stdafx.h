@@ -9,9 +9,15 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <map>
+#include <string>
+#include <sstream>
+#include <fstream>
 
 #include <gsl/gsl_sf_bessel.h>
+#include <gsl/gsl_multifit.h>
 
+using namespace std;
 
 
 // TODO: reference additional headers your program requires here
