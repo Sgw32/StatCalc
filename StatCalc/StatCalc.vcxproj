@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileLoader.cpp" />
+    <ClCompile Include="Layers.cpp" />
     <ClCompile Include="RAWData.cpp" />
     <ClCompile Include="RegressionCalc.cpp" />
     <ClCompile Include="StatCalc.cpp" />
