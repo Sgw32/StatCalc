@@ -7,6 +7,7 @@ RAWData::RAWData()
 	maxDistance = 0;
 	alt10Elevation = -1;
 	minElevation = -1;
+	endOfAscent = 0;
 }
 
 float RAWData::getMinTemperature()
@@ -193,11 +194,23 @@ void RAWData::addString(string str)
 	if (((minElevation < 0) || (minElevation > mE)) && (time>60))
 		minElevation = mE;
 	if (maxAltitude < mH)
+	{
 		maxAltitude = mH;
+		endOfAscent = time;
+	}
+		
 	if (maxDistance < mD)
 		maxDistance = mD;
 
 	
+}
+
+map<int, float>::iterator RAWData::getIteratorByTimePoint(int time)
+{
+	map<int, float>::iterator i = H.begin();
+	while (((*i).first) < time)
+		i++;
+	return i;
 }
 
 int RAWData::getNumSpikes()

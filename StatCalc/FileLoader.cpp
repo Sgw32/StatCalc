@@ -8,12 +8,13 @@ FileLoader::FileLoader()
 
 FileLoader::~FileLoader()
 {
-	delete rDa;
+	if (rDa)
+		delete rDa;
 }
 
 void FileLoader::parseCommandLine(int argc, char *argv[])
 {
-	if (argc == 1)
+	if (argc == 2)
 	{
 		inputFile = string(argv[1]);
 	}

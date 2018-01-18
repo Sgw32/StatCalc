@@ -94,6 +94,7 @@
   <ItemGroup>
     <ClCompile Include="FileLoader.cpp" />
     <ClCompile Include="RAWData.cpp" />
+    <ClCompile Include="RegressionCalc.cpp" />
     <ClCompile Include="StatCalc.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

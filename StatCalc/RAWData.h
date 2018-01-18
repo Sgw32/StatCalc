@@ -34,9 +34,18 @@ public:
 	{
 		return alt10Elevation;
 	}
+
+	int getEndOfAscent()
+	{
+		return endOfAscent;
+	}
+
+	map<int, float>::iterator getIteratorByTimePoint(int time);
+
 	map<int,float> H, D, E, A, T, U;
 private:
 	//float groundTemp;
+	int endOfAscent;
 	float maxAltitude;
 	float maxDistance;
 	float minElevation;
