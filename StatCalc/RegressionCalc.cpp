@@ -3,7 +3,7 @@
 
 RegressionCalc::RegressionCalc()
 {
-
+	c_poly = 0;
 }
 
 RegressionCalc::~RegressionCalc()
@@ -103,8 +103,8 @@ void RegressionCalc::calculateAscentPolynomial(int tstart, int tend, int order)
 	map<int, float>::iterator ist;
 	map<int, float>::iterator ien;
 
-	ist = rDa->getIteratorByTimePoint(tstart);
-	ien = rDa->getIteratorByTimePoint(tend);
+	ist = rDa->getIteratorByPoint(tstart);
+	ien = rDa->getIteratorByPoint(tend);
 
 	int n;
 	double xi, yi, ei, chisq;
@@ -187,6 +187,9 @@ void RegressionCalc::calculateAscentPolynomial(int tstart, int tend, int order)
 
 void RegressionCalc::copyGSLPolynomial()
 {
+	if (c_poly)
+		gsl_vector_free(c_poly);
+	c_poly = gsl_vector_alloc(c->size);
 	gsl_vector_memcpy(c_poly, c);
 }
 

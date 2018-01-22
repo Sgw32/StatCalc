@@ -3,30 +3,35 @@
 #include "stdafx.h"
 #include "FileLoader.h"
 #include "RegressionCalc.h"
+#include "Layers.h"
+#include "Statistics.h"
 
 int main(int argc, char *argv[])
 {
-	//double x, y;
-	//x = 5.0;
-	//y = gsl_sf_bessel_J0(x);
-	//printf("J0(%g) = %.18e\n", x, y);
-
+	//Загрузим RAW файл. Обработаем консольные команды.
 	FileLoader* fl = new FileLoader;
 	fl->parseCommandLine(argc, argv);
 	fl->loadData();
 	RAWData* rda = fl->getRAWData();
-	RegressionCalc rclc;
-	rclc.loadRAWData(rda);
-	rclc.calculateAscentPolynomial(0, rda->getEndOfAscent(), 5);
-	rclc.calculateAscentPolynomial(0, rda->getEndOfAscent(), 4);
-	rclc.calculateAscentPolynomial(0, rda->getEndOfAscent(), 3);
-	rclc.calculateAscentPolynomial(0, rda->getEndOfAscent(), 2);
 
-	gsl_vector* c_poly_5 = rclc.returnGSLPolynomial();
-	gsl_vector* c_poly_4 = rclc.returnGSLPolynomial();
-	gsl_vector* c_poly_3 = rclc.returnGSLPolynomial();
-	gsl_vector* c_poly_2 = rclc.returnGSLPolynomial();
+	//Инициализируем калькулятор с регрессией
+	RegressionCalc* rclc = new RegressionCalc();
+	rclc->loadRAWData(rda);
 
+	//Посчитаем слои
+	Layers layers;
+	layers.loadRAWData(rda);
+	layers.makeLayers();
+	pair<map<int, float>, map<int, float>> layerMap = layers.returnLayers();
+	
+	//Посчитаем статистику
+	Statistics* stats = new Statistics();
+	stats->loadRAWData(rda);
+	stats->loadRegressionCalc(rclc);
+	stats->loadLayers(layerMap);
+
+	stats->makeWorkLayers();
+	stats->computeStatistics();
 
 	system("pause");
 	return 0;

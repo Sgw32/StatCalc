@@ -17,6 +17,7 @@
 
 #include <gsl/gsl_sf_bessel.h>
 #include <gsl/gsl_multifit.h>
+#include <gsl/gsl_poly.h>
 
 using namespace std;
 

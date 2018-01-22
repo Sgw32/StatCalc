@@ -40,12 +40,21 @@ public:
 		return endOfAscent;
 	}
 
+	int getEndOfAscentPoint()
+	{
+		return endOfAscentPoint;
+	}
+
+	int getPointByIterator(map<int, float>::iterator time);
+	map<int, float>::iterator getIteratorByPoint(int point);
+	
 	map<int, float>::iterator getIteratorByTimePoint(int time);
 
 	map<int,float> H, D, E, A, T, U;
 private:
 	//float groundTemp;
 	int endOfAscent;
+	int endOfAscentPoint;
 	float maxAltitude;
 	float maxDistance;
 	float minElevation;
