@@ -42,6 +42,9 @@
     <ClInclude Include="Layers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorkLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Statistics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReportWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

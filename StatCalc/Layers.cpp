@@ -48,6 +48,32 @@ void Layers::makeLayers()
 
 }
 
+void Layers::make5000Layers()
+{
+	m5000Layers.push_back(0);
+	map<int, float>::iterator np = rDa->H.begin(); //перва€ €чейка сло€
+	int shag = 5000; //шаг
+	int tshag = 200;
+	float h0 = 0; //нижн€€ граница сло€
+	map<int, float>::iterator n = rDa->H.begin();
+	int i1 = distance(rDa->H.begin(), n);
+	int i2 = distance(rDa->H.begin(), rDa->getIteratorByTimePoint(rDa->getEndOfAscent()));
+	while ((i1 - i2) < 0)
+	{
+		float h1 = h0 + shag; //верхн€€ граница сло€
+		map<int, float>::iterator nfH = Fv(h1, 5, rDa->getEndOfAscent());
+		n = nfH;
+		m5000Layers.push_back(rDa->getPointByIterator(nfH));
+		i1 = distance(rDa->H.begin(), n);
+		h0 = h1;
+	}
+}
+
+vector<int> Layers::return5000Layers()
+{
+	return m5000Layers;
+}
+
 map<int, float>::iterator Layers::Fv(float H, int nc, int nfnl)
 {
 	map<int, float>::iterator it = rDa->H.begin();

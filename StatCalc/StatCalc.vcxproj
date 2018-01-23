@@ -90,12 +90,14 @@
     <ClInclude Include="Statistics.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WorkLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileLoader.cpp" />
     <ClCompile Include="Layers.cpp" />
     <ClCompile Include="RAWData.cpp" />
     <ClCompile Include="RegressionCalc.cpp" />
+    <ClCompile Include="ReportWriter.cpp" />
     <ClCompile Include="StatCalc.cpp" />
     <ClCompile Include="Statistics.cpp" />
     <ClCompile Include="stdafx.cpp">

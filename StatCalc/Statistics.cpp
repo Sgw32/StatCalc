@@ -47,7 +47,7 @@ void Statistics::makeWorkLayers()
 		rcalc->calculateAscentPolynomial(st_i, en_i, 5); 
 		gsl_vector* c_poly_5 = rcalc->returnGSLPolynomial();
 		
-		for (int i = st_i; i != en_i;i++)
+		for (int i = 0; i != rDa->getEndOfAscentPoint();i++)
 		{
 			map<int, float>::iterator it = rDa->getIteratorByPoint(i);
 			//В список рабочих слоёв добавляем разницу полинома и исходных данных за слой
@@ -57,6 +57,12 @@ void Statistics::makeWorkLayers()
 		workLayers.push_back(wly);
 		it_e++;
 	}
+
+}
+
+void Statistics::load5000Layers(vector<int> m500l)
+{
+	m5000Layers = m500l;
 }
 
 void Statistics::makeMainWorkLayer()
@@ -71,9 +77,27 @@ void Statistics::makeMainWorkLayer()
 		float val = gsl_poly_eval(c_poly_5->data, c_poly_5->size, (*it).first);
 		wly->addData((*it).first, val - (*it).second);
 	}
+	mainWorkLayer = wly;
 }
 
 void Statistics::computeStatistics()
 {
-
+	if (m5000Layers.size() > 0)
+	{
+		while (m5000Layers.size() > workLayers.size())
+			m5000Layers.pop_back();
+		vector<int>::iterator it;
+		vector<WorkLayer*>::iterator layer = workLayers.begin();
+		//Перечисление требуемых слоёв.
+		for (it = m5000Layers.begin(); it != m5000Layers.end() - 1; it++)
+		{
+			vector<int>::iterator nxt = it;
+			nxt++;
+			WorkLayer* wly = (*layer);
+			int start = (*it);
+			int end = (*nxt);
+			errors.push_back(wly->computeError(start, end));
+			layer++;
+		}
+	}
 }
