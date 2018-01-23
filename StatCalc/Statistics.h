@@ -2,6 +2,7 @@
 #include "RAWData.h"
 #include "RegressionCalc.h"
 #include "WorkLayer.h"
+#include "ReportWriter.h"
 
 #ifndef STATISTICS_H
 #define STATISTICS_H

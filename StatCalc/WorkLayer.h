@@ -101,8 +101,10 @@ public:
 		pair<float, float> res;
 		res.first = ((float)nout2) / ((float)np);
 		res.second = ((float)nout3) / ((float)np);
+		mCurSigma = sigma;
 		return res;
 	}
 	map<int, float> mData;
+	float mCurSigma;
 };
 #endif

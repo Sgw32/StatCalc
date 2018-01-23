@@ -12,12 +12,19 @@ FileLoader::~FileLoader()
 		delete rDa;
 }
 
-void FileLoader::parseCommandLine(int argc, char *argv[])
+bool FileLoader::parseCommandLine(int argc, char *argv[])
 {
 	if (argc == 2)
 	{
 		inputFile = string(argv[1]);
+		return true;
 	}
+	return false;
+}
+
+string FileLoader::getOutName()
+{
+	return inputFile + ".csv";
 }
 
 string FileLoader::getRAWfile()

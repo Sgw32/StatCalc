@@ -89,15 +89,31 @@ void Statistics::computeStatistics()
 		vector<int>::iterator it;
 		vector<WorkLayer*>::iterator layer = workLayers.begin();
 		//Перечисление требуемых слоёв.
-		for (it = m5000Layers.begin(); it != m5000Layers.end() - 1; it++)
+		for (it = m5000Layers.begin(); it != m5000Layers.end(); it++)
 		{
 			vector<int>::iterator nxt = it;
 			nxt++;
 			WorkLayer* wly = (*layer);
 			int start = (*it);
-			int end = (*nxt);
-			errors.push_back(wly->computeError(start, end));
+			int end = 0;
+			if (nxt == m5000Layers.end())
+			{
+				end = rDa->getEndOfAscentPoint()-1;
+			}
+			else
+			{
+				end = (*nxt);
+			}
+			//errors.push_back(wly->computeError(start, end));
+			pair<float,float> error = wly->computeError(start, end);
+			map<int, float>::iterator dit = wly->mData.begin();
+			advance(dit, (*it));
+			ReportWriter::Instance().addResultPair((*it), (*dit).first, 
+				wly->mCurSigma, error.first, error.second);
 			layer++;
 		}
+		ReportWriter::Instance().setRAWData(rDa);
+		ReportWriter::Instance().setWorkLayers(workLayers);
+		
 	}
 }

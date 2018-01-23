@@ -9,7 +9,8 @@ class FileLoader
 public:
 	FileLoader();
 	~FileLoader();
-	void parseCommandLine(int argc, char *argv[]);
+	bool parseCommandLine(int argc, char *argv[]);
+	string getOutName();
 	void loadData();
 	RAWData* getRAWData();
 	string getRAWfile();
