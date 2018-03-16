@@ -41,13 +41,26 @@ void ReportWriter::writeWorkLayers(int count, csv::ofstream& os)
 
 void ReportWriter::writeResults(int count, csv::ofstream& os)
 {
+	size_t ps = rcalc->polynomials.size();
 	int c2 = (count > (resPairs.size()-1)) ? (-1) : count;
+	int c3 = (count > (resPairs.size() + 1 + ps - 1)) ? (-1) : count - resPairs.size();
 	if (c2 > -1)
 	{
 		vector<ResultPair*>::iterator it = resPairs.begin();
 		advance(it, c2);
 		ResultPair* rp = (*it);
 		os << rp->point+1 << rp->time << rp->dev << rp->errors2 << rp->errors3;
+	}
+	else if (c3 > -1)
+	{
+		if (!c3)
+		{
+			os << "POLYNOMIALS" << "" << "" << "" << "";
+		}
+		else
+		{
+			os << rcalc->polynomials[c3-1];
+		}
 	}
 	else
 	{
@@ -56,27 +69,37 @@ void ReportWriter::writeResults(int count, csv::ofstream& os)
 	
 }
 
+void ReportWriter::loadRegressionCalc(RegressionCalc* rclc)
+{
+	rcalc = rclc;
+}
+
 void ReportWriter::writeReport(string filename)
 {
 	csv::ofstream os(filename);
 	os.set_delimiter(';', "$$");
 	if (os.is_open())
 	{
-		os << "RAWDataT" << "RAWDataH" << "LAYERS";
+		os << "RAWDataT" << "RAWDataH";
 		vector<WorkLayer*>::iterator it;
-		for (it = workLayers.begin(); it != workLayers.end()-1; it++)
+		int cnt = 0;
+		for (it = workLayers.begin(); it != workLayers.end(); it++)
 		{
-			os << "";
+			stringstream ss;
+			ss << "LAYER" << cnt;
+			os << ss.str();
+			ss.flush();
+			cnt++;
 		}
-		os << "RESULTS" << NEWLINE;
+		os << "LS" << "LE" << "DEV" << "ES2" << "ES3" << NEWLINE;
 
 		int count = rDa->getEndOfAscentPoint();
 		for (int i = 0; i != count; i++)
 		{
-			os << (*rDa->getIteratorByPoint(i)).first;
-			os << (*rDa->getIteratorByPoint(i)).second;
-			writeWorkLayers(i, os);
-			writeResults(i, os);
+			os << (*rDa->getIteratorByPoint(i)).first; //RAW Data
+			os << (*rDa->getIteratorByPoint(i)).second; //RAW Data
+			writeWorkLayers(i, os); //Polynomials
+			writeResults(i, os);//Results table
 			os << NEWLINE;
 		}
 		

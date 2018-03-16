@@ -1,5 +1,25 @@
 #include "stdafx.h"
 #include "RegressionCalc.h"
+#include <stdarg.h>  // For va_start, etc.
+#include <memory>    // For std::unique_ptr
+
+std::string string_format(const std::string fmt_str, ...) {
+	int final_n, n = ((int)fmt_str.size()) * 2; /* Reserve two times as much as the length of the fmt_str */
+	std::unique_ptr<char[]> formatted;
+	va_list ap;
+	while (1) {
+		formatted.reset(new char[n]); /* Wrap the plain char array into the unique_ptr */
+		strcpy(&formatted[0], fmt_str.c_str());
+		va_start(ap, fmt_str);
+		final_n = vsnprintf(&formatted[0], n, fmt_str.c_str(), ap);
+		va_end(ap);
+		if (final_n < 0 || final_n >= n)
+			n += abs(final_n - n + 1);
+		else
+			break;
+	}
+	return std::string(formatted.get());
+}
 
 RegressionCalc::RegressionCalc()
 {
@@ -155,12 +175,15 @@ void RegressionCalc::calculateAscentPolynomial(int tstart, int tend, int order)
 #define C(i) (gsl_vector_get(c,(i)))
 #define COV(i,j) (gsl_matrix_get(cov,(i),(j)))
 
-
+	string res_p;
 	switch (order)
 	{
 	case 5:
 		printf("# best fit: Y = %g + %g X + %g X^2 + %g X^3 + %g X^4\n",
 			C(0), C(1), C(2), C(3), C(4));
+		res_p = string_format("# best fit: Y = %g + %g X + %g X^2 + %g X^3 + %g X^4",
+			C(0), C(1), C(2), C(3), C(4));
+		polynomials.push_back(res_p);
 		break;
 	case 4:
 		printf("# best fit: Y = %g + %g X + %g X^2 + %g X^3\n",

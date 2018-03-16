@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 		stats->makeWorkLayers();
 		stats->computeStatistics();
 
+		ReportWriter::Instance().loadRegressionCalc(rclc);
 		ReportWriter::Instance().writeReport(fl->getOutName());
 		//Память после всего этого всё равно будет очищена. Всем пока, было весело.
 	}

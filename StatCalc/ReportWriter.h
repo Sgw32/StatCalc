@@ -2,6 +2,7 @@
 #include "minicsv.h"
 #include "WorkLayer.h"
 #include "RAWData.h"
+#include "RegressionCalc.h"
 
 using namespace mini;
 
@@ -32,6 +33,7 @@ public:
 	void init();
 	void addResultPair(int point, int time, float dev, float errors2, float errors3);
 	void setWorkLayers(vector<WorkLayer*> wlayers);
+	void loadRegressionCalc(RegressionCalc* rclc);
 	void setRAWData(RAWData* rda);
 	void writeReport(string filename);
 private:
@@ -40,6 +42,7 @@ private:
 	RAWData* rDa;
 	vector<ResultPair*> resPairs;
 	vector<WorkLayer*> workLayers;
+	RegressionCalc* rcalc;
 	ReportWriter() 
 	{
 	}  // конструктор недоступен

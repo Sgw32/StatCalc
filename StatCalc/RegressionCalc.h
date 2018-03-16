@@ -17,6 +17,7 @@ public:
 	vector<double> returnPolynomial();
 	void copyGSLPolynomial();
 	gsl_vector* returnGSLPolynomial();
+	vector<string> polynomials;
 private:
 	RAWData* rDa;
 	gsl_matrix *X, *cov;
